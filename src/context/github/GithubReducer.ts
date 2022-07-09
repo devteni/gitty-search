@@ -1,7 +1,9 @@
-import { UserProp } from "@/src/components/users/UsersLists"
+import { UserProp } from "../../components/users/UsersLists"
 
 type State = {
     users: UserProp[],
+    user: {},
+    repos: any[],
     loading: boolean
 }
 
@@ -14,6 +16,14 @@ const githubReducer = (state: State, action: any) => {
                 loading: false
             }
         
+        case 'GET_USER_AND_REPOS':
+            return {
+                ...state, 
+                user: action.payload.user,
+                repos: action.payload.repos,
+                loading: false
+            }
+
         case 'CLEAR_USERS':
             return {
                 ...state, 

@@ -1,32 +1,35 @@
 import React, { useContext, useState } from 'react'
+import { searchUsers } from 'src/context/github/GithubActions';
 import GithubContext from '../../context/github/GithubContext';
 import AlertContext from '../../context/alert/AlertContext';
 
 function UserSearch() {
     const [text, setText] = useState('');
 
-    const { users, searchUsers, clearUsers } = useContext(GithubContext);
+    const { users, dispatch } = useContext(GithubContext);
     const { setAlert } = useContext(AlertContext);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setText(e.currentTarget.value);
     }
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         if (text === '') {
             setAlert('Please enter something', 'error');
         } else {
-            // @todo - search users
-            searchUsers(text);
-
+            dispatch({ type: 'SET_LOADING' });
+            const users = await searchUsers(text);
+            dispatch({ type: 'GET_USERS', payload: users })
             setText('');
         }
     }
 
+    const clearUsers = () => dispatch({ type: 'CLEAR_USERS' });
+
   return (
-    <div className='grid grid-cols-1 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 md-8 gap-8'>
+    <div className='grid grid-cols-1 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 md-8 gap-8 mb-6'>
         <div>
             <form onSubmit={handleSubmit}>
                 <div className="form-control">

@@ -22,7 +22,7 @@ function UsersLists() {
       </div>
     )
   } else {
-    return <h3><Spinner /></h3>
+    return <h3 className="ml-25 mt-10"><Spinner /></h3>
   }
   
   

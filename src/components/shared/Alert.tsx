@@ -12,10 +12,10 @@ function Alert() {
                 <p className='flex items-start mb-4 space-x-2'>
                 {
                  alert.type === "error" && (
-                 <p 
-                    className='flex-1 text-base font-semibold leading-7 text-white'>
+                 <span 
+                    className='flex-1 text-base font-semibold leading-7 text-rose-500'>
                     {alert.msg}
-                </p>)
+                </span>)
                 }
                 </p>
             )
